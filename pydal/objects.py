@@ -1910,7 +1910,7 @@ class Field(Expression, Serializable):
         if self.custom_retrieve:
             return self.custom_retrieve(name, path)
         if self.authorize or isinstance(self_uploadfield, str):
-            row = self.db(self == name).select().first()
+            row = self.db(self == name).select(self, self._table[self_uploadfield]).first()
             if not row:
                 raise NotFoundException
         if self.authorize and not self.authorize(row):
